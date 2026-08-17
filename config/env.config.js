@@ -1,3 +1,11 @@
+const path = require('path');
+
+// trust the corporate antivirus (Seqrite) SSL-inspection CA so Node/Playwright can reach naukri.com
+const corporateCaPath = path.join(__dirname, '..', 'certs', 'seqrite-ca.pem');
+if (!process.env.NODE_EXTRA_CA_CERTS && require('fs').existsSync(corporateCaPath)) {
+  process.env.NODE_EXTRA_CA_CERTS = corporateCaPath;
+}
+
 require('dotenv').config();
 
 const env = process.env.ENV || 'qa';

@@ -1,6 +1,11 @@
 require('dotenv').config();
+const fs = require('fs');
 const { defineConfig, devices } = require('@playwright/test');
 const config = require('./config/env.config');
+
+// corporate antivirus (Seqrite) blocks Playwright's bundled Chromium but allows Opera - launch Opera instead
+const operaPath = `${process.env.LOCALAPPDATA}\\Programs\\Opera\\opera.exe`;
+const useOpera = process.platform === 'win32' && fs.existsSync(operaPath);
 
 module.exports = defineConfig({
   testDir: './tests',
@@ -27,7 +32,10 @@ module.exports = defineConfig({
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: {
+        ...devices['Desktop Chrome'],
+        ...(useOpera ? { launchOptions: { executablePath: operaPath } } : {}),
+      },
     },
     {
       name: 'firefox',
