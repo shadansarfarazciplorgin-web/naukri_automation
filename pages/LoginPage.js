@@ -1,17 +1,13 @@
 const { BasePage } = require('./BasePage');
+const { loginPage } = require('../config/locators');
 
 class LoginPage extends BasePage {
   constructor(page) {
     super(page);
-    this.usernameInput = page.locator('#usernameField');
-    this.passwordInput = page.locator('#passwordField');
-    this.loginSubmitButton = page.getByRole('button', { name: /^login$/i });
-    this.errorMessage = page.locator('.error-txt, .otp-error');
-
-    // OTP based login (mobile number flow)
-    this.mobileInput = page.locator('#usernameField');
-    this.otpInputs = page.locator('input.otp-input, input[maxlength="1"]');
-    this.otpSubmitButton = page.getByRole('button', { name: /verify|submit/i });
+    this.usernameInput = page.locator(loginPage.usernameInput);
+    this.passwordInput = page.locator(loginPage.passwordInput);
+    this.loginSubmitButton = page.locator(loginPage.loginSubmitButton);
+    this.errorMessage = page.locator(loginPage.errorMessage);
   }
 
   async loginWithCredentials(username, password) {
@@ -20,19 +16,8 @@ class LoginPage extends BasePage {
     await this.click(this.loginSubmitButton);
   }
 
-  async loginWithMobileOtp(mobile, otp) {
-    await this.fill(this.mobileInput, mobile);
-    await this.click(this.loginSubmitButton);
-
-    const otpBoxes = await this.otpInputs.all();
-    if (otpBoxes.length > 1) {
-      for (let i = 0; i < otp.length && i < otpBoxes.length; i++) {
-        await otpBoxes[i].fill(otp[i]);
-      }
-    } else if (otpBoxes.length === 1) {
-      await otpBoxes[0].fill(otp);
-    }
-    await this.click(this.otpSubmitButton);
+  async isLoginFormVisible() {
+    return this.isVisible(this.usernameInput);
   }
 
   async getErrorMessage() {

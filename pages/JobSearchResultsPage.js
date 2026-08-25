@@ -1,11 +1,12 @@
 const { BasePage } = require('./BasePage');
+const { jobSearchResultsPage } = require('../config/locators');
 
 class JobSearchResultsPage extends BasePage {
   constructor(page) {
     super(page);
-    this.jobCards = page.locator('.cust-job-tuple, article.jobTuple');
-    this.jobTitleFirst = this.jobCards.first().locator('.title, a.title');
-    this.noResultsMessage = page.getByText(/no results found/i);
+    this.jobCards = page.locator(jobSearchResultsPage.jobCards);
+    this.jobTitleFirst = this.jobCards.locator(jobSearchResultsPage.jobTitleFirst);
+    this.noResultsMessage = page.locator(jobSearchResultsPage.noResultsMessage);
   }
 
   async getResultsCount() {

@@ -1,26 +1,28 @@
 const { BasePage } = require('./BasePage');
+const { homePage } = require('../config/locators');
 
 class HomePage extends BasePage {
   constructor(page) {
     super(page);
-    this.loginButton = page.getByText('Login', { exact: true });
-    this.registerButton = page.getByText('Register', { exact: true });
-    this.searchKeywordInput = page.getByPlaceholder(/Enter skills \/ designations \/ companies/i);
-    this.searchLocationInput = page.getByPlaceholder(/Enter location/i);
-    this.searchButton = page.locator('button.qsbSubmit');
+    // keyword input may be named jobInput in locators
+    this.searchInput = page.locator(homePage.jobInput);
+    this.searchKeywordInput = page.locator(homePage.searchKeywordInput);
+    this.searchLocationInput = page.locator(homePage.locationInput);
+    this.searchButton = page.locator(homePage.searchButton);
+    this.experienceDropdown = page.locator(homePage.experienceDropdown);
   }
 
-  async openLogin() {
-    await this.click(this.loginButton);
+  async clickSearchBox() {
+    await this.click(this.searchInput);
   }
 
-  async searchJob(keyword, location) {
+  async searchForJob(keyword, experience, location) {
     await this.fill(this.searchKeywordInput, keyword);
-    if (location) {
-      await this.fill(this.searchLocationInput, location);
-    }
+    await this.selectDropdownOption(this.experienceDropdown, experience);
+    await this.fill(this.searchLocationInput, location);
     await this.click(this.searchButton);
   }
+
 }
 
 module.exports = { HomePage };
