@@ -18,6 +18,9 @@ module.exports = {
         jobCards: '//div[contains(@class, "srp-jobtuple-wrapper")]',
         jobTitleFirst: '//div[contains(@class, "srp-jobtuple-wrapper")]//a[contains(@class, "title")]',
     },
+    jobDetailPage: {
+        applyButton: '(//button[@id=\'apply-button\'])[1]',
+    },
 
 
 };

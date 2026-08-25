@@ -3,6 +3,7 @@ const { HomePage } = require('../pages/HomePage');
 const { LandingPage } = require('../pages/LandingPage');
 const { LoginPage } = require('../pages/LoginPage');
 const { JobSearchResultsPage } = require('../pages/JobSearchResultsPage');
+const { JobDetailPage } = require('../pages/JobDetailPage');
 
 const test = base.test.extend({
     homePage: async ({ page }, use) => {
@@ -16,6 +17,9 @@ const test = base.test.extend({
     },
     landingPage: async ({ page }, use) => {
         await use(new LandingPage(page));
+    },
+    jobDetailPage: async ({ page }, use) => {
+        await use(new JobDetailPage(page));
     },
 });
 

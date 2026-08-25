@@ -5,7 +5,7 @@ const assertion = require('../utils/assertion');
 const { jobSearchResultsPage } = require('../config/locators');
 
 test.describe('Naukri.com - Apply for Job', () => {
-    test('should apply for a job successfully', async ({ landingPage, loginPage, page, homePage, jobSearchResultsPage }) => {
+    test('should apply for a job successfully', async ({ landingPage, loginPage, page, homePage, jobSearchResultsPage, jobDetailPage }) => {
         const { email, password } = testData.validUser;
 
         await landingPage.openLogin();
@@ -14,6 +14,6 @@ test.describe('Naukri.com - Apply for Job', () => {
         await assertion.expectTextContains(homePage.userName, 'Shadan Sarfaraz');
         await homePage.clickSearchBox();
         await homePage.searchForJob(testData.jobSearch.keyword, testData.jobSearch.experience, testData.jobSearch.location);
-        await jobSearchResultsPage.openFirstJob(page);
+        jobDetailPage = await jobSearchResultsPage.openFirstJob(page);
     });
 });
