@@ -6,6 +6,7 @@ module.exports = {
         experienceDropdown: "//div[@class='dropdownMainContainer']",
         locationInput: '//input[@placeholder=\'Enter location\']',
         searchButton: '//button[@aria-label="Search"]',
+        userName: '.info__heading',
     },
     loginPage: {
         usernameInput: '//input[@placeholder="Enter your active Email ID / Username"]',
@@ -14,8 +15,9 @@ module.exports = {
         errorMessage: '.error-txt, .otp-error',
     },
     jobSearchResultsPage: {
-        jobCards: '.cust-job-tuple, article.jobTuple',
-        jobTitleFirst: '.cust-job-tuple .title, article.jobTuple .title, a.title',
-        noResultsMessage: 'text=/no results found/i',
+        jobCards: '//div[contains(@class, "srp-jobtuple-wrapper")]',
+        jobTitleFirst: '//div[contains(@class, "srp-jobtuple-wrapper")]//a[contains(@class, "title")]',
     },
+
+
 };

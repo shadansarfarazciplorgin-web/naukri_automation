@@ -13,8 +13,8 @@ class JobSearchResultsPage extends BasePage {
     return this.jobCards.count();
   }
 
-  async openFirstJob() {
-    await this.click(this.jobTitleFirst);
+  async openFirstJob(page) {
+    return await this.clickAndWaitForNewPage(this.jobCards.first());
   }
 }
 

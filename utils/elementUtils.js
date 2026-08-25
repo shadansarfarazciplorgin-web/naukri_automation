@@ -64,6 +64,15 @@ class ElementUtils {
 
         throw new Error(`Option "${label}" not found for dropdown`);
     }
+
+    async clickAndWaitForNewPage(locator) {
+        const [newPage] = await Promise.all([
+            this.page.context().waitForEvent('page'),
+            locator.click()
+        ]);
+        await newPage.waitForLoadState();
+        return newPage;
+    }
 }
 
 module.exports = { ElementUtils };
